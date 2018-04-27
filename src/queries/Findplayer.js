@@ -11,3 +11,28 @@ query getPlayer {
     }
 
 }`
+
+
+
+
+//     `
+//     query getPlayer1 ($id: ID!){
+//         getPlayer(id: $id) {
+//             position
+//             maxBench
+//             maxSquat
+//         }
+//     }
+// `
+
+
+// query getPlayer {
+//     getPlayer(id: "1"){
+//         id
+//         firstName
+//         lastName
+//         position
+//         gradClass
+//     }
+//
+// }`
