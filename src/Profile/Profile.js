@@ -9,46 +9,32 @@ import Findplayer from "../queries/Findplayer";
 
 // const fetchPlayer = () => {
 //     graphql(Findplayer, {
-//         options: props => {return { variables: { props.sub } }}
+//         options: props => {return { variables: { profile } }}
 //     })(Profile)
 //         }
 
 
 class Profile extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            profile: []
+
+    componentWillMount()
+    {
+        this.setState({ profile: {} });
+        const { userProfile, getProfile } = this.props.auth;
+        if (!userProfile) {
+            getProfile((err, profile) => {
+                this.setState({ profile });
+                console.log(this.state)
+            });
+        } else {
+            this.setState({ profile: userProfile });
         }
     }
 
-
-
-  componentWillMount() {
-    this.setState({ profile: {} });
-    const { userProfile, getProfile } = this.props.auth;
-
-
-    if (!userProfile) {
-      getProfile((err, profile) => {
-
-        console.log("props:", this.props)
-          console.log("profile-props:", this.props.auth.userProfile.sub)
-        this.setState({ profile });
-      });
-    } else {
-        console.log("Else:")
-      this.setState({ profile: userProfile });
-    }
-  }
-
-  componentDidMount() {
-        console.log("componentdidmount:", this.props.auth.userProfile)
-  }
   render() {
     const { profile } = this.state;
     console.log("GQL:", this.props.players)
+      console.log("render", profile)
 
 
           return (
@@ -243,7 +229,7 @@ class Profile extends Component {
 }
 
 export default Profile
-//
+
 // graphql(Findplayer, {
 //     options: props => {return { variables: { this.props.auth.userProfile.sub } }}
 // })(Profile);

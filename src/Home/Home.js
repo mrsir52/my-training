@@ -2,21 +2,39 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class Home extends Component {
+
   login() {
     this.props.auth.login();
   }
+    componentWillMount() {
+        this.setState({ profile: {} });
+        const { userProfile, getProfile } = this.props.auth;
+        if (!userProfile) {
+            getProfile((err, profile) => {
+                this.setState({ profile });
+                console.log("home", this.state)
+            });
+        } else {
+            this.setState({ profile: userProfile });
+        }
+    }
   render() {
+
     const { isAuthenticated } = this.props.auth;
+      console.log(this.props)
     return (
+
       <div className="container">
         {
           isAuthenticated() && (
               <h4>
                 You are logged in! You can now view your{' '}
-                <Link to="profile">profile area</Link>
+                <Link to="NewProfile">profile area</Link>
                 .
               </h4>
+
             )
+
         }
         {
           !isAuthenticated() && (
